@@ -15,10 +15,10 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            . . . 1 1 1 6 6 6 6 6 6 6 6 . . 
-            . . 1 1 6 6 6 9 9 8 8 8 8 6 6 . 
-            . 1 1 1 1 6 9 8 8 8 8 8 8 6 6 . 
-            . . . . 1 1 6 6 6 6 6 6 6 6 . . 
+            . . 6 6 6 6 6 6 6 6 1 1 . . . . 
+            . 6 6 8 8 8 8 8 8 9 6 1 1 1 1 . 
+            . 6 6 8 8 8 8 9 9 6 6 6 1 1 . . 
+            . . 6 6 6 6 6 6 6 6 1 1 1 . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -26,7 +26,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, mySprite, -222, 10)
-    } else {
+    } else if (facingLeft == 0) {
         frogSpit = sprites.createProjectileFromSprite(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -265,6 +265,7 @@ game.onUpdate(function () {
         333,
         true
         )
+        facingLeft = 0
     }
     vertBar.setLabel(convertToText(Math.round(mySprite.y)))
 })
