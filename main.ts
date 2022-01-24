@@ -96,8 +96,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . 7 7 . 7 7 . . . . 
             . . . . . . . . . . . 7 7 . . . 
             `],
-        200,
-        true
+        333,
+        false
         )
         music.thump.play()
     }
@@ -176,6 +176,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     info.changeLifeBy(-1)
     music.zapped.play()
 })
+let soundeffect: SoundBuffer = null
 let hurtBolt: Sprite = null
 let colRandom = 0
 let rowRandom = 0
@@ -301,4 +302,6 @@ game.onUpdateInterval(1000, function () {
         `, 0, -80)
     hurtBolt.x = randint(10, 240)
     hurtBolt.setKind(SpriteKind.Enemy)
+    soundeffect = soundEffects.createSound(soundEffects.waveNumber(WaveType.Square50), 100, 0, 440)
+    soundeffect.play()
 })
