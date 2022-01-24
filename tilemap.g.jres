@@ -11,10 +11,16 @@
         "displayName": "myTile"
     },
     "tile2": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFUAAAAAAAAAVQUAAAAAAAAFBQAAAAAAAFW7CwAAAAAAALu7AAAAAAAAsbsFAAAAAAAQC1UAAAAAAABQUAAAAAAAAABVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAACsqqoMAAAAwKpQpaoMAACsVVUFAMoAAArFylVVoAAAWqWlqlylAABapVWlWqUAAKqlpQVaoAAArKWlBVqgAACgpaqlWqUAAKBVVaVcpQAAwKqqqlWgAAAAAABVBcoAAAAAAMWqDAAAAAAAAAAAAA==",
         "mimeType": "image/x-mkcd-f4",
         "tilemapTile": true,
         "displayName": "myTile0"
+    },
+    "tile3": {
+        "data": "hwQQABAAAAAAzMzMzAwAAMC8e6qqzAAAvHt7qsrKfAfMu3t3qsoAALx7e3p3ynwHvLt7qqrKzAy8y6esqswAALy7p6qsygAAvLx3d3fKfAC8u3uqqsrMDLx7e6yqygAAvLunenrKdwC8u6eqqsrMDLy8e3eqzAAAwLx7rMoMAAAAzMzMzAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile1"
     },
     "level1": {
         "id": "level1",
@@ -40,7 +46,8 @@
             "myTiles.tile1",
             "myTiles.tile2",
             "sprites.dungeon.greenOuterWest1",
-            "sprites.dungeon.greenOuterEast0"
+            "sprites.dungeon.greenOuterEast0",
+            "myTiles.tile3"
         ],
         "displayName": "level2"
     },

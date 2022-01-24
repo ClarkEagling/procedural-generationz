@@ -6,6 +6,8 @@ namespace myTiles {
     export const tile1 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
     export const tile2 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile3 = image.ofBuffer(hex``);
 
     helpers._registerFactory("tilemap", function(name: string) {
         switch(helpers.stringTrim(name)) {
@@ -130,7 +132,7 @@ namespace myTiles {
 .......22.......
 ................
 ................
-`, [myTiles.transparency16,sprites.dungeon.hazardLava1,sprites.builtin.oceanSand1,sprites.builtin.oceanSand2,sprites.builtin.oceanSand3,sprites.dungeon.greenInnerNorthWest,sprites.dungeon.greenInnerNorthEast,myTiles.tile1,myTiles.tile2,sprites.dungeon.greenOuterWest1,sprites.dungeon.greenOuterEast0], TileScale.Sixteen);
+`, [myTiles.transparency16,sprites.dungeon.hazardLava1,sprites.builtin.oceanSand1,sprites.builtin.oceanSand2,sprites.builtin.oceanSand3,sprites.dungeon.greenInnerNorthWest,sprites.dungeon.greenInnerNorthEast,myTiles.tile1,myTiles.tile2,sprites.dungeon.greenOuterWest1,sprites.dungeon.greenOuterEast0,myTiles.tile3], TileScale.Sixteen);
         }
         return null;
     })
@@ -142,6 +144,8 @@ namespace myTiles {
             case "tile1":return tile1;
             case "myTile0":
             case "tile2":return tile2;
+            case "myTile1":
+            case "tile3":return tile3;
         }
         return null;
     })
