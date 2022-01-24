@@ -1,4 +1,5 @@
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
+    platformCount = 0
     scene.setBackgroundColor(5)
     info.changeScoreBy(1000)
     music.beamUp.play()
@@ -101,6 +102,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function MakeLevel () {
+    scene.setBackgroundColor(15)
     tiles.setTilemap(tilemap`level2`)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile`)
     while (platformCount < 160) {
@@ -115,10 +117,10 @@ function MakeLevel () {
 }
 let colRandom = 0
 let rowRandom = 0
-let platformCount = 0
 let vertBar: StatusBarSprite = null
 let mySprite: Sprite = null
 let platzBar: StatusBarSprite = null
+let platformCount = 0
 let playerPlatforms = 0
 let levelNumber = 0
 playerPlatforms = 0
