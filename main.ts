@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const badProjectile = SpriteKind.create()
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
     platformCount = 0
     scene.setBackgroundColor(5)
@@ -62,12 +65,23 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         sfxJump.play()
     }
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.badProjectile, function (sprite, otherSprite) {
+    sprite.destroy()
+    otherSprite.destroy()
+    info.changeScoreBy(10)
+    sfxSpitHit.play()
+})
 function MakeVertPosBar () {
     vertBar = statusbars.create(20, 4, StatusBarKind.Health)
     vertBar.positionDirection(CollisionDirection.Bottom)
     vertBar.setBarSize(0, 4)
     vertBar.setOffsetPadding(0, 3)
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.badProjectile, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    info.changeLifeBy(-1)
+    music.zapped.play()
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sprite, location) {
     mySprite.destroy()
     game.over(false, effects.splatter)
@@ -145,20 +159,22 @@ function MakeBaddies () {
             . . . . . . c c . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.Enemy)
-        myEnemy.setVelocity(randint(-100, 100), 0)
+        myEnemy.vx = randint(-100, 100)
         myEnemy.ay = 333
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprite.destroy()
-    otherSprite.destroy()
+    otherSprite.destroy(effects.coolRadial, 200)
     info.changeScoreBy(10)
     sfxSpitHit.play()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (sprite.bottom >= otherSprite.top) {
+    if (sprite.y <= otherSprite.y) {
         otherSprite.destroy(effects.confetti, 200)
-        mySprite.vy = -222
+        sprite.vy = -222
+        info.changeScoreBy(10)
+        sfxSpitHit.play()
     } else {
         otherSprite.destroy()
         info.changeLifeBy(-1)
@@ -344,10 +360,12 @@ game.onUpdate(function () {
         )
         facingLeft = 0
     }
-    if (myEnemy.x < 10 || myEnemy.x > 140) {
-        myEnemy.vx += myEnemy.vx * -1
-    }
     vertBar.setLabel(convertToText(Math.round(mySprite.y)))
+    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+        if (value.x < 14 || value.x > 136) {
+            value.vx += value.vx * -1
+        }
+    }
 })
 game.onUpdateInterval(1333, function () {
     hurtBolt = sprites.createProjectileFromSide(img`
@@ -369,6 +387,6 @@ game.onUpdateInterval(1333, function () {
         . . . . . c 2 2 2 c . . . . . . 
         `, 0, -80)
     hurtBolt.x = randint(10, 240)
-    hurtBolt.setKind(SpriteKind.Enemy)
+    hurtBolt.setKind(SpriteKind.badProjectile)
     sfxFire.play()
 })
