@@ -25,7 +25,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            `, mySprite, -222, 10)
+            `, mySprite, -300, 0)
     } else if (facingLeft == 0) {
         frogSpit = sprites.createProjectileFromSprite(img`
             . . . . . . . . . . . . . . . . 
@@ -44,9 +44,10 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            `, mySprite, 222, 10)
+            `, mySprite, 300, 0)
     }
-    music.sonar.play()
+    music.footstep.play()
+    info.changeScoreBy(-1)
 })
 function MakePlatzBar () {
     platzBar = statusbars.create(20, 4, StatusBarKind.Energy)
@@ -58,6 +59,46 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy = -270
         mySprite.startEffect(effects.trail, 150)
+        animation.runImageAnimation(
+        mySprite,
+        [img`
+            . . . . . . . 7 7 7 7 7 7 7 . . 
+            . . . . . 7 7 7 7 7 1 1 7 7 7 . 
+            . . . . 7 7 7 7 7 7 1 f 7 7 7 . 
+            . . . . 7 6 7 7 7 7 7 7 7 7 . . 
+            . . . 7 7 7 7 7 7 7 2 7 7 7 7 7 
+            . . . 7 7 7 7 7 7 7 2 2 f f f 7 
+            . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
+            . . 7 7 6 7 7 7 7 7 7 7 7 7 . . 
+            . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+            . . 7 7 7 7 7 7 7 7 7 . . 7 . . 
+            . . 7 7 7 7 6 7 7 7 7 . . 7 7 . 
+            . . 7 6 7 7 7 7 7 7 7 . . . . . 
+            . . 7 7 7 7 7 7 7 7 7 7 . . . . 
+            . . . 7 7 7 7 7 . . 7 7 . . . . 
+            . . . . . . . 7 7 . 7 7 . . . . 
+            . . . . . . . . . . . 7 7 . . . 
+            `,img`
+            . . . . . . . 7 7 7 7 7 7 7 . . 
+            . . . . . 7 7 7 7 7 1 f 7 7 7 . 
+            . . . . 7 7 7 7 7 7 1 1 7 7 7 . 
+            . . . . 7 6 7 7 7 7 7 7 7 7 . . 
+            . . . 7 7 7 7 7 7 7 2 7 7 7 7 7 
+            . . . 7 7 7 7 7 7 7 2 2 f f f 7 
+            . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
+            . . 7 7 6 7 7 7 7 7 7 7 7 7 . . 
+            . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+            . . 7 7 7 7 7 7 7 7 7 . . 7 . . 
+            . . 7 7 7 7 6 7 7 7 7 . . 7 7 . 
+            . . 7 6 7 7 7 7 7 7 7 . . . . . 
+            . . 7 7 7 7 7 7 7 7 7 7 . . . . 
+            . . . 7 7 7 7 7 . . 7 7 . . . . 
+            . . . . . . . 7 7 . 7 7 . . . . 
+            . . . . . . . . . . . 7 7 . . . 
+            `],
+        200,
+        true
+        )
         music.thump.play()
     }
 })
@@ -90,46 +131,6 @@ function MakeMySprite () {
         . . . 7 7 . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Player)
-    animation.runImageAnimation(
-    mySprite,
-    [img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 7 7 7 7 7 7 7 . . 
-        . . . . . 7 7 7 7 7 1 f 7 7 7 . 
-        . . . . 7 7 7 7 7 7 1 1 7 7 7 . 
-        . . . . 7 6 7 7 7 7 7 7 7 7 . . 
-        . . . 7 7 7 7 7 7 7 2 7 7 7 7 7 
-        . . . 7 7 7 7 7 7 7 2 2 f f f 7 
-        . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
-        . . 7 7 6 7 7 7 7 7 7 7 7 7 . . 
-        . 7 7 7 7 7 7 7 7 7 7 7 7 7 . . 
-        . . 7 7 7 7 7 7 7 7 7 . . 7 . . 
-        . . 7 7 7 7 7 7 7 7 7 . . 7 7 . 
-        . . 7 7 7 7 7 7 7 7 7 . . . . . 
-        . . 7 7 7 7 7 7 7 7 7 7 7 . . . 
-        . . . 7 7 7 7 . . . . 7 7 7 . . 
-        . . . . . . . . . . . . . 7 7 . 
-        `,img`
-        . . . . . . . 7 7 7 7 7 7 7 . . 
-        . . . . . 7 7 7 7 7 1 f 7 7 7 . 
-        . . . . 7 7 7 7 7 7 1 1 7 7 7 . 
-        . . . . 7 6 7 7 7 7 7 7 7 7 . . 
-        . . . 7 7 7 7 7 7 7 2 7 7 7 7 7 
-        . . . 7 7 7 7 7 7 7 2 2 f f f 7 
-        . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
-        . . 7 7 6 7 7 7 7 7 7 7 7 7 . . 
-        . 7 7 7 7 7 7 7 7 7 7 7 7 7 . . 
-        . . 7 7 7 7 7 7 7 7 7 . . 7 . . 
-        . . 7 7 7 7 7 7 7 7 7 . . 7 7 . 
-        . . 7 7 7 7 7 7 7 7 7 . . . . . 
-        . . 7 7 7 7 7 7 7 7 7 7 7 . . . 
-        . . . 7 7 7 7 . . . . 7 7 7 . . 
-        . . . . . . . . . . . 7 7 7 . . 
-        . . . . . . . . . . . . . 7 7 . 
-        `],
-    333,
-    true
-    )
     controller.moveSprite(mySprite, 120, 0)
     mySprite.ay = 500
     scene.cameraFollowSprite(mySprite)
@@ -161,7 +162,7 @@ function MakeLevel () {
 }
 info.onLifeZero(function () {
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile`)
-    music.zapped.play()
+    music.bigCrash.play()
     info.setLife(3)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -173,6 +174,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
     info.changeLifeBy(-1)
+    music.zapped.play()
 })
 let hurtBolt: Sprite = null
 let colRandom = 0
@@ -204,10 +206,10 @@ game.onUpdate(function () {
             7 f f f 2 2 7 7 7 7 7 7 7 . . . 
             7 7 7 7 7 7 7 7 6 7 7 7 7 7 . . 
             . . 7 7 7 7 7 7 7 7 7 6 7 7 . . 
-            . . 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
+            . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
             . . 7 . . 7 7 7 7 7 7 7 7 7 . . 
-            . 7 7 . . 7 7 7 7 7 7 7 7 7 . . 
-            . . . . . 7 7 7 7 7 7 7 7 7 . . 
+            . 7 7 . . 7 7 7 7 6 7 7 7 7 . . 
+            . . . . . 7 7 7 7 7 7 7 6 7 . . 
             . . . 7 7 7 7 7 7 7 7 7 7 7 . . 
             . . 7 7 7 . . . . 7 7 7 7 . . . 
             . 7 7 . . . . . . . . . . . . . 
@@ -220,10 +222,10 @@ game.onUpdate(function () {
             7 f f f 2 2 7 7 7 7 7 7 7 . . . 
             7 7 7 7 7 7 7 7 6 7 7 7 7 7 . . 
             . . 7 7 7 7 7 7 7 7 7 6 7 7 . . 
-            . . 7 7 7 7 7 7 7 7 7 7 7 7 7 . 
+            . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
             . . 7 . . 7 7 7 7 7 7 7 7 7 . . 
-            . 7 7 . . 7 7 7 7 7 7 7 7 7 . . 
-            . . . . . 7 7 7 7 7 7 7 7 7 . . 
+            . 7 7 . . 7 7 7 7 6 7 7 7 7 . . 
+            . . . . . 7 7 7 7 7 7 7 6 7 . . 
             . . . 7 7 7 7 7 7 7 7 7 7 7 . . 
             . . 7 7 7 . . . . 7 7 7 7 . . . 
             . . 7 7 7 . . . . . . . . . . . 
@@ -246,10 +248,10 @@ game.onUpdate(function () {
             . . . 7 7 7 7 7 7 7 2 2 f f f 7 
             . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
             . . 7 7 6 7 7 7 7 7 7 7 7 7 . . 
-            . 7 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+            . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
             . . 7 7 7 7 7 7 7 7 7 . . 7 . . 
-            . . 7 7 7 7 7 7 7 7 7 . . 7 7 . 
-            . . 7 7 7 7 7 7 7 7 7 . . . . . 
+            . . 7 7 7 7 6 7 7 7 7 . . 7 7 . 
+            . . 7 6 7 7 7 7 7 7 7 . . . . . 
             . . 7 7 7 7 7 7 7 7 7 7 7 . . . 
             . . . 7 7 7 7 . . . . 7 7 7 . . 
             . . . . . . . . . . . . . 7 7 . 
@@ -262,10 +264,10 @@ game.onUpdate(function () {
             . . . 7 7 7 7 7 7 7 2 2 f f f 7 
             . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
             . . 7 7 6 7 7 7 7 7 7 7 7 7 . . 
-            . 7 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+            . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
             . . 7 7 7 7 7 7 7 7 7 . . 7 . . 
-            . . 7 7 7 7 7 7 7 7 7 . . 7 7 . 
-            . . 7 7 7 7 7 7 7 7 7 . . . . . 
+            . . 7 7 7 7 6 7 7 7 7 . . 7 7 . 
+            . . 7 6 7 7 7 7 7 7 7 . . . . . 
             . . 7 7 7 7 7 7 7 7 7 7 7 . . . 
             . . . 7 7 7 7 . . . . 7 7 7 . . 
             . . . . . . . . . . . 7 7 7 . . 
