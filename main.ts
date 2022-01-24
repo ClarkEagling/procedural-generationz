@@ -46,12 +46,13 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . . 
             `, mySprite, 222, 10)
     }
+    music.sonar.play()
 })
 function MakePlatzBar () {
     platzBar = statusbars.create(20, 4, StatusBarKind.Energy)
     platzBar.setLabel("platz")
     platzBar.positionDirection(CollisionDirection.Top)
-    platzBar.setOffsetPadding(-55, 8)
+    platzBar.setOffsetPadding(0, 8)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
@@ -144,6 +145,8 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function MakeLevel () {
     scene.setBackgroundColor(15)
+    playerPlatforms = 0
+    platzBar.value += 99
     tiles.setTilemap(tilemap`level2`)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile`)
     while (platformCount < 160) {
@@ -161,6 +164,12 @@ info.onLifeZero(function () {
     music.zapped.play()
     info.setLife(3)
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprite.destroy()
+    otherSprite.destroy()
+    info.changeScoreBy(10)
+    music.pewPew.play()
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
     info.changeLifeBy(-1)
@@ -168,19 +177,19 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let hurtBolt: Sprite = null
 let colRandom = 0
 let rowRandom = 0
+let playerPlatforms = 0
 let vertBar: StatusBarSprite = null
 let platzBar: StatusBarSprite = null
 let mySprite: Sprite = null
 let frogSpit: Sprite = null
 let facingLeft = 0
 let platformCount = 0
-let playerPlatforms = 0
+game.showLongText("This is Frob... A is Jump,    B is Spit, Down arrow drops a Plat", DialogLayout.Center)
 let levelNumber = 0
-playerPlatforms = 0
 MakeMySprite()
-MakeLevel()
 MakePlatzBar()
 MakeVertPosBar()
+MakeLevel()
 game.onUpdate(function () {
     if (controller.left.isPressed()) {
         animation.runImageAnimation(
