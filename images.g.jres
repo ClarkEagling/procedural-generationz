@@ -1,0 +1,12 @@
+{
+    "image1": {
+        "data": "hwQQAGQAAAARERERERER0d3d3d3d3d3du7u7u7u7u7uqqqqqqqqqqsrMzMzMzMzMzPz//////////wAAEREREREREdHd3d3d3d3d3bu7u7u7u7u7qqqqqqqqqqrKzMzMzMzMzMz8//////////8AABERERERERHR3d3d3d3d3d27u7u7u7u7u6qqqqqqqqqqyszMzMzMzMzM/P//////////AAARERERERER0d3d3d3d3d3du7u7u7u7u7uqqqqqqqqqqsrMzMzMzMzMzPz//////////wAAEREREREREdHd3d3d3d3d3bu7u7u7u7u7qqqqqqqqqqrKzMzMzMzMzMz8//////////8AABERERERERHR3d3d3d3d3d27u7u7u7u7u6qqqqqqqqqqyszMzMzMzMzM/P//////////AAARERERERER0d3d3d3d3d3du7u7u7u7u7uqqqqqqqqqqsrMzMzMzMzMzPz//////////wAAEREREREREdHd3d3d3d3d3bu7u7u7u7u7qqqqqqqqqqrKzMzMzMzMzMz8//////////8AABERERERERHR3d3d3d3d3d27u7u7u7u7u6qqqqqqqqqqyszMzMzMzMzM/P//////////AAARERERERER0d3d3d3d3d3du7u7u7u7u7uqqqqqqqqqqsrMzMzMzMzMzPz//////////wAAEREREREREdHd3d3d3d3d3bu7u7u7u7u7qqqqqqqqqqrKzMzMzMzMzMz8//////////8AABERERERERHR3d3d3d3d3d27u7u7u7u7u6qqqqqqqqqqyszMzMzMzMzM/P//////////AAARERERERER0d3d3d3d3d3du7u7u7u7u7uqqqqqqqqqqsrMzMzMzMzMzPz//////////wAAEREREREREdHd3d3d3d3d3bu7u7u7u7u7qqqqqqqqqqrKzMzMzMzMzMz8//////////8AABERERERERHR3d3d3d3d3d27u7u7u7u7u6qqqqqqqqqqyszMzMzMzMzM/P//////////AAARERERERER0d3d3d3d3d3du7u7u7u7u7uqqqqqqqqqqsrMzMzMzMzMzPz//////////wAA",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "gradient"
+    },
+    "*": {
+        "mimeType": "image/x-mkcd-f4",
+        "dataEncoding": "base64",
+        "namespace": "myImages"
+    }
+}

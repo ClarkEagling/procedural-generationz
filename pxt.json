@@ -1,9 +1,12 @@
 {
-    "name": "Procedural Generationz",
+    "name": "Procedural Frog",
     "description": "",
     "dependencies": {
         "device": "*",
-        "tilemaps": "github:microsoft/pxt-tilemaps#v1.12.0"
+        "tilemaps": "github:microsoft/pxt-tilemaps#v1.12.0",
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.1",
+        "arcade-background-scroll": "github:microsoft/arcade-background-scroll#926e12eefffd09d453c7cde73f8d6ebd0e666d9d",
+        "arcade-text": "github:microsoft/arcade-text#v1.3.0"
     },
     "files": [
         "main.blocks",
@@ -11,7 +14,9 @@
         "README.md",
         "assets.json",
         "tilemap.g.jres",
-        "tilemap.g.ts"
+        "tilemap.g.ts",
+        "images.g.jres",
+        "images.g.ts"
     ],
     "testFiles": [
         "test.ts"
