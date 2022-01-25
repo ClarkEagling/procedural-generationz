@@ -59,11 +59,7 @@ function MakePlatzBar () {
     platzBar.setOffsetPadding(0, 8)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
-        mySprite.vy = -270
-        mySprite.startEffect(effects.trail, 150)
-        sfxJump.play()
-    }
+	
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.badProjectile, function (sprite, otherSprite) {
     sprite.destroy()
@@ -105,6 +101,80 @@ function MakeMySprite () {
         . . . 7 7 . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Player)
+    animation.runImageAnimation(
+    mySprite,
+    [img`
+        . . . . . . . 7 7 7 7 7 7 7 . . 
+        . . . . . 7 7 7 7 7 1 1 7 7 7 . 
+        . . . . 7 7 7 7 7 7 1 f 7 7 7 . 
+        . . . . 7 6 7 7 7 7 7 7 7 7 . . 
+        . . . 7 7 7 7 7 7 7 2 7 7 7 7 7 
+        . . . 7 7 7 7 7 7 7 2 2 f f f 7 
+        . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
+        . . 7 7 6 7 7 7 7 7 7 7 7 7 e e 
+        . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+        . . 7 7 7 7 7 7 7 7 7 e e 7 . . 
+        . . 7 7 7 7 6 7 7 7 7 . . 7 7 . 
+        . . 7 6 7 7 7 7 7 7 7 . . e e . 
+        . . 7 7 7 7 7 7 7 7 7 7 . . . . 
+        . . e 7 7 7 7 7 e e 7 7 . . . . 
+        . . . e e e e 7 7 . 7 7 . . . . 
+        . . . . . . . c c . c 7 7 . . . 
+        `,img`
+        . . . . . . . 7 7 7 7 7 7 7 . . 
+        . . . . . 7 7 7 7 7 1 f 7 7 7 . 
+        . . . . 7 7 7 7 7 7 1 1 7 7 7 . 
+        . . . . 7 6 7 7 7 7 7 7 7 7 . . 
+        . . . 7 7 7 7 7 7 7 2 7 7 7 7 7 
+        . . . 7 7 7 7 7 7 7 2 2 f f f 7 
+        . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
+        . . 7 7 6 7 7 7 7 7 7 7 7 7 e e 
+        . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+        . . 7 7 7 7 7 7 7 7 7 e e 7 . . 
+        . . 7 7 7 7 6 7 7 7 7 . . 7 7 . 
+        . . 7 6 7 7 7 7 7 7 7 . . e e . 
+        . . 7 7 7 7 7 7 7 7 7 7 . . . . 
+        . . e 7 7 7 7 7 e e 7 7 . . . . 
+        . . . e e e e 7 7 . 7 7 . . . . 
+        . . . . . . . c c . c 7 7 . . . 
+        `,img`
+        . . . . . . . 7 7 7 7 7 7 7 . . 
+        . . . . . 7 7 7 7 7 1 f 7 7 7 . 
+        . . . . 7 7 7 7 7 7 1 1 7 7 7 . 
+        . . . . 7 6 7 7 7 7 7 7 7 7 . . 
+        . . . 7 7 7 7 7 7 7 2 7 7 7 7 7 
+        . . . 7 7 7 7 7 7 7 2 2 f f f 7 
+        . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
+        . . 7 7 6 7 7 7 7 7 7 7 7 7 e e 
+        . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+        . . 7 7 7 7 7 7 7 7 7 e e 7 . . 
+        . . 7 7 7 7 6 7 7 7 7 . . 7 7 . 
+        . . 7 6 7 7 7 7 7 7 7 . . e e . 
+        . . 7 7 7 7 7 7 7 7 7 7 . . . . 
+        . . e 7 7 7 7 7 e e 7 7 . . . . 
+        . . . e e e 7 7 . . 7 7 7 . . . 
+        . . . . . c c 7 7 . c c c . . . 
+        `,img`
+        . . . . . . . 7 7 7 7 7 7 7 . . 
+        . . . . . 7 7 7 7 7 1 f 7 7 7 . 
+        . . . . 7 7 7 7 7 7 1 1 7 7 7 . 
+        . . . . 7 6 7 7 7 7 7 7 7 7 . . 
+        . . . 7 7 7 7 7 7 7 2 7 7 7 7 7 
+        . . . 7 7 7 7 7 7 7 2 2 f f f 7 
+        . . 7 7 7 7 7 6 7 7 7 7 7 7 7 7 
+        . . 7 7 6 7 7 7 7 7 7 7 7 7 e e 
+        . . 7 7 7 7 7 7 7 7 7 7 7 7 . . 
+        . . 7 7 7 7 7 7 7 7 7 e e 7 . . 
+        . . 7 7 7 7 6 7 7 7 7 . . 7 7 . 
+        . . 7 6 7 7 7 7 7 7 7 . . e e . 
+        . . 7 7 7 7 7 7 7 7 7 7 . . . . 
+        . . e 7 7 7 7 7 e e 7 7 . . . . 
+        . . . e e e 7 7 . . 7 7 7 . . . 
+        . . . . . c c 7 7 . c c c . . . 
+        `],
+    333,
+    true
+    )
     controller.moveSprite(mySprite, 135, 0)
     mySprite.ay = 500
     scene.cameraFollowSprite(mySprite)
@@ -143,24 +213,24 @@ function MakeBaddies () {
     for (let value of tiles.getTilesByType(assets.tile`myTile2`)) {
         myEnemy = sprites.create(img`
             . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . 3 3 3 3 3 . . . . . . . 
-            . 3 3 3 2 2 2 2 2 3 3 3 . . . . 
-            . 2 2 2 a a a 2 a a a 2 3 3 . . 
-            . 2 2 2 1 f 1 2 1 f 1 2 2 2 3 . 
-            . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 c . 2 2 2 2 2 2 2 2 2 2 . 
-            . 2 2 c . 2 2 2 2 . 2 2 2 2 2 . 
-            . c 2 c . 2 2 2 c . c 2 2 2 c . 
-            . . 2 c . 2 2 2 c . . 2 2 2 . . 
-            . . c . . c 2 2 c . . 2 2 c . . 
-            . . . . . . 2 2 c . . c c . . . 
-            . . . . . . c c . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+            . . . . d d d d d d d . . . . . 
+            . . d d c c c c c c c d d . . . 
+            . d d c c c c c c c c c d d . . 
+            . d c c b b b b b b b c c d . . 
+            d b c b b d d d d d b b c b d . 
+            d b c b d b b b b b d b c b d . 
+            d b c b d b d d d b d b c b d . 
+            d b c b d b d c d b d b c b d . 
+            d b c b d b d d d b d b c b d . 
+            d b c b d b b b b b d b c b d . 
+            d b c b b d d d d d b b c b d . 
+            . d b c b b b b b b b c b d . . 
+            . d d b c c c c c c c b d d . . 
+            . . d d b b b b b b b d d . . . 
+            . . . . d d d d d d d . . . . . 
             `, SpriteKind.Enemy)
-        myEnemy.vx = randint(-100, 100)
         myEnemy.ay = 333
+        myEnemy.vx = randint(-3, 3) * 30
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -194,7 +264,6 @@ let facingLeft = 0
 let platformCount = 0
 let sfxSpitHit: SoundBuffer = null
 let sfxSpit: SoundBuffer = null
-let sfxJump: SoundBuffer = null
 game.showLongText("This is Frob... A is Jump,    B is Spit, Down arrow drops a Plat", DialogLayout.Center)
 let levelNumber = 0
 MakeMySprite()
@@ -202,7 +271,7 @@ MakePlatzBar()
 MakeVertPosBar()
 MakeLevel()
 MakeBaddies()
-sfxJump = soundEffects.createSound(soundEffects.waveNumber(WaveType.Square50), 100, 0, 440)
+let sfxJump = soundEffects.createSound(soundEffects.waveNumber(WaveType.Square50), 100, 0, 440)
 let sfxFire = soundEffects.createSound(soundEffects.waveNumber(WaveType.Triangle), 150, 330, 0)
 sfxSpit = soundEffects.createSound(soundEffects.waveNumber(WaveType.WhiteNoise), 100, 2000, 0)
 sfxSpitHit = soundEffects.createSound(soundEffects.waveNumber(WaveType.TunableNoise), 200, 2500, 440, 255, 0)
@@ -360,11 +429,16 @@ game.onUpdate(function () {
         )
         facingLeft = 0
     }
-    vertBar.setLabel(convertToText(Math.round(mySprite.y)))
+    vertBar.setLabel(convertToText(Math.round(mySprite.x)))
+    if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite.vy = -270
+        mySprite.startEffect(effects.trail, 150)
+        sfxJump.play()
+    }
+})
+game.onUpdateInterval(2000, function () {
     for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-        if (value.x < 14 || value.x > 136) {
-            value.vx += value.vx * -1
-        }
+        value.vx = value.vx * -1
     }
 })
 game.onUpdateInterval(1333, function () {
@@ -389,4 +463,7 @@ game.onUpdateInterval(1333, function () {
     hurtBolt.x = randint(10, 240)
     hurtBolt.setKind(SpriteKind.badProjectile)
     sfxFire.play()
+})
+game.onUpdateInterval(1111, function () {
+	
 })
