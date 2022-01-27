@@ -1,15 +1,8 @@
 namespace SpriteKind {
     export const badProjectile = SpriteKind.create()
     export const Key = SpriteKind.create()
+    export const ExitDoor = SpriteKind.create()
 }
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
-    platformCount = 0
-    scene.setBackgroundColor(5)
-    info.changeScoreBy(1000)
-    music.beamUp.play()
-    game.splash("nice!")
-    MakeLevel()
-})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (facingLeft == 1) {
         frogSpit = sprites.createProjectileFromSprite(img`
@@ -53,6 +46,13 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     info.changeScoreBy(-1)
     sfxSpit.play()
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.ExitDoor, function (sprite, otherSprite) {
+    scene.setBackgroundColor(5)
+    info.changeScoreBy(1000)
+    music.beamUp.play()
+    game.splash("nice!")
+    MakeLevel()
+})
 function MakePlatzBar () {
     platzBar = statusbars.create(20, 4, StatusBarKind.Energy)
     platzBar.setLabel("platz")
@@ -64,8 +64,108 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite.ay = mySprite.ay * -1
         pause(350)
         mySprite.ay = mySprite.ay * -1
-        jumpergy.value += -25
+        jumpergyBar.value += -25
         jumpEnergy += -1
+    }
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+    music.baDing.play()
+    keyCount += 1
+    if (keyCount == 3) {
+        ExxitDoor = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . e e e e e e e e e . . . 
+            . . . . 5 e e e e e e e e . . . 
+            . . . . 5 e e e e e e e e . . . 
+            . . . . e e e e e e e e e . . . 
+            . . . . e e e e e e e e e . . . 
+            . . . . e e e e e e e e e . . . 
+            . . . . e e e e e e e 5 e . . . 
+            . . . . e e e e e e e e e . . . 
+            . . . . e e e e e e e e e . . . 
+            . . . . 5 e e e e e e e e . . . 
+            . . . . 5 e e e e e e e e . . . 
+            . . . . e e e e e e e e e . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.ExitDoor)
+        animation.runImageAnimation(
+        ExxitDoor,
+        [img`
+            . . . . . . . . 3 . . . . . . . 
+            . . . . . . . 3 a 3 . . . . . . 
+            . . . . . . 3 a c a 3 . . . . . 
+            . . . . . 3 a c . c a 3 . . . . 
+            . . . . 3 a c . 3 . c a 3 . . . 
+            . . . 3 a c . 3 a 3 . c a 3 . . 
+            . . 3 a c . 3 a c a 3 . c a 3 . 
+            . 3 a c . 3 a c . c a 3 . c a 3 
+            . a c . 3 a c . c a 3 . c a 3 . 
+            . . . 3 a c . . a 3 . c a 3 . . 
+            . . . . 3 a c . 3 . c a 3 . . . 
+            . . . . . 3 a c . c a 3 . . . . 
+            . . . . . . 3 a c a 3 . . . . . 
+            . . . . . . . 3 a 3 . . . . . . 
+            . . . . . . . . 3 . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . a 3 . . . . . . . 
+            . . . . . . . c a 3 . . . . . . 
+            . . . . . . 3 . c a 3 . . . . . 
+            . . . . . 3 a 3 . c a 3 . . . . 
+            . . . . 3 a c a 3 . c a 3 . . . 
+            . . . 3 a c . c a 3 . c a 3 . . 
+            . . 3 a c . . . c a 3 . c a 3 . 
+            . 3 a c . 3 a c . c a 3 . c a 3 
+            . . 3 a c . 3 a c a 3 . c a 3 . 
+            . . . 3 a c . 3 a 3 . c a 3 . . 
+            . . . . 3 a c . 3 . c a 3 . . . 
+            . . . . . 3 a c . c a 3 . . . . 
+            . . . . . . 3 a c a 3 . . . . . 
+            . . . . . . . 3 a 3 . . . . . . 
+            . . . . . . . . 3 . . . . . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . 3 . . . . . . . . 
+            . . . . . . 3 a 3 . . . . . . . 
+            . . . . . 3 a c a 3 . . . . . . 
+            . . . . 3 a c . c a 3 . . . . . 
+            . . . 3 a c . 3 . c a 3 . . . . 
+            . . 3 a c . 3 a . . c a 3 . . . 
+            . 3 a c . 3 a c . c a 3 . c a . 
+            3 a c . 3 a c . c a 3 . c a 3 . 
+            . 3 a c . 3 a c a 3 . c a 3 . . 
+            . . 3 a c . 3 a 3 . c a 3 . . . 
+            . . . 3 a c . 3 . c a 3 . . . . 
+            . . . . 3 a c . c a 3 . . . . . 
+            . . . . . 3 a c a 3 . . . . . . 
+            . . . . . . 3 a 3 . . . . . . . 
+            . . . . . . . 3 . . . . . . . . 
+            `,img`
+            . . . . . . . 3 . . . . . . . . 
+            . . . . . . 3 a 3 . . . . . . . 
+            . . . . . 3 a c a 3 . . . . . . 
+            . . . . 3 a c . c a 3 . . . . . 
+            . . . 3 a c . 3 . c a 3 . . . . 
+            . . 3 a c . 3 a 3 . c a 3 . . . 
+            . 3 a c . 3 a c a 3 . c a 3 . . 
+            3 a c . 3 a c . c a 3 . c a 3 . 
+            . 3 a c . 3 a c . . . c a 3 . . 
+            . . 3 a c . 3 a c . c a 3 . . . 
+            . . . 3 a c . 3 a c a 3 . . . . 
+            . . . . 3 a c . 3 a 3 . . . . . 
+            . . . . . 3 a c . 3 . . . . . . 
+            . . . . . . 3 a c . . . . . . . 
+            . . . . . . . 3 a . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `],
+        100,
+        true
+        )
+        tiles.placeOnTile(ExxitDoor, tiles.getTileLocation(7, 1))
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.badProjectile, function (sprite, otherSprite) {
@@ -73,10 +173,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.badProjectile, function (spr
     otherSprite.destroy()
     info.changeScoreBy(10)
     sfxSpitHit.play()
-    if (jumpEnergy < 4) {
-        jumpEnergy += 1
-        jumpergy.value += 25
-    }
+    playerPlatforms += -1
+    platzBar.value += 25
 })
 function MakeVertPosBar () {
     vertBar = statusbars.create(20, 4, StatusBarKind.Health)
@@ -200,12 +298,20 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function MakeLevel () {
+    platformCount = 0
     scene.setBackgroundColor(15)
     playerPlatforms = 0
+    platzBar.value = 100
     jumpEnergy = 4
-    platzBar.value += 99
+    jumpergyBar.value = 100
+    keyCount = 0
     tiles.setTilemap(tilemap`level2`)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile`)
+    for (let index = 0; index < 3; index++) {
+        rowRandom = randint(10, 85)
+        colRandom = randint(0, 15)
+        tiles.setTileAt(tiles.getTileLocation(colRandom, rowRandom), assets.tile`myTile3`)
+    }
     while (platformCount < 160) {
         rowRandom = randint(5, 95)
         colRandom = randint(0, 15)
@@ -215,25 +321,6 @@ function MakeLevel () {
         }
         platformCount += 1
     }
-    key1 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . 5 5 . . . 
-        . . . . . . . . . . 5 5 5 5 . . 
-        . . . . . . . . . 5 5 5 5 5 . . 
-        . . . . . . . . 5 5 5 4 4 5 5 . 
-        . . . . . . . 5 5 5 5 5 4 4 5 5 
-        . . . . . . 5 5 4 4 4 5 5 . 4 4 
-        . . . . . 5 5 4 . . . 4 5 5 . . 
-        . . . . 5 5 4 . . . . . 4 4 . . 
-        . 5 5 5 5 4 . . . . . . . . . . 
-        . 5 4 4 5 . . . . . . . . . . . 
-        . 5 . . 5 . . . . . . . . . . . 
-        . 5 5 5 5 . . . . . . . . . . . 
-        . 4 4 4 4 . . . . . . . . . . . 
-        `, SpriteKind.Key)
-    tiles.placeOnRandomTile(key1, sprites.builtin.oceanDepths1)
 }
 info.onLifeZero(function () {
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile`)
@@ -242,73 +329,76 @@ info.onLifeZero(function () {
 })
 function MakeBaddies () {
     for (let value of tiles.getTilesByType(assets.tile`myTile2`)) {
-        myEnemy = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . d d d d d d d . . . . . 
-            . . d d c c c c c c c d d . . . 
-            . d d c c c c c c c c c d d . . 
-            . d c c b b b b b b b c c d . . 
-            d b c b b d d d d d b b c b d . 
-            d b c b d b b b b b d b c b d . 
-            d b c b d b d d d b d b c b d . 
-            d b c b d b d c d b d b c b d . 
-            d b c b d b d d d b d b c b d . 
-            d b c b d b b b b b d b c b d . 
-            d b c b b d d d d d b b c b d . 
-            . d b c b b b b b b b c b d . . 
-            . d d b c c c c c c c b d d . . 
-            . . d d b b b b b b b d d . . . 
-            . . . . d d d d d d d . . . . . 
-            `, SpriteKind.Enemy)
-        animation.runImageAnimation(
-        myEnemy,
-        [img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 7 7 7 . . . . . . 
-            . . . . . 7 7 7 7 7 7 7 . . . . 
-            . . . . . 7 f 1 7 f 1 7 . . . . 
-            . . . . 7 7 7 7 7 7 7 7 7 . . . 
-            . . . 6 6 7 6 6 6 7 7 6 6 . . . 
-            . . b b b b b b b 6 6 b b b . . 
-            . 3 3 b 3 3 3 3 3 3 3 3 3 b 3 . 
-            a a a b a a 3 a a a a 3 a b b a 
-            c a a c c a a a c c c a a c c c 
-            `,img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 7 7 7 . . . . . . 
-            . . . . . 7 7 7 7 7 7 7 . . . . 
-            . . . . . 7 1 f 7 1 f 7 . . . . 
-            . . . . 7 7 7 7 7 7 7 7 7 . . . 
-            . . . 6 6 7 6 6 6 7 7 6 6 . . . 
-            . . b b b b b b b 6 6 b b b . . 
-            . 3 3 b 3 3 3 3 3 3 3 3 3 b 3 . 
-            a a a b a a 3 a a a a 3 a b b a 
-            c a a c c a a a c c c a a c c c 
-            `],
-        500,
-        true
-        )
-        tiles.placeOnTile(myEnemy, value)
-        myEnemy.ay = 333
+        coinToss = randint(1, 10)
+        if (coinToss > 5) {
+            myEnemy = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . c . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.Enemy)
+            animation.runImageAnimation(
+            myEnemy,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . 7 7 7 . . . . . . 
+                . . . . . 7 7 7 7 7 7 7 . . . . 
+                . . . . . 7 f 1 7 f 1 7 . . . . 
+                . . . . 7 7 7 7 7 7 7 7 7 . . . 
+                . . . 6 6 7 6 6 6 7 7 6 6 . . . 
+                . . b b b b b b b 6 6 b b b . . 
+                . 3 3 b 3 3 3 3 3 3 3 3 3 b 3 . 
+                a a a b a a 3 a a a a 3 a b b a 
+                c a a c c a a a c c c a a c c c 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . 7 7 7 . . . . . . 
+                . . . . . 7 7 7 7 7 7 7 . . . . 
+                . . . . . 7 1 f 7 1 f 7 . . . . 
+                . . . . 7 7 7 7 7 7 7 7 7 . . . 
+                . . . 6 6 7 6 6 6 7 7 6 6 . . . 
+                . . b b b b b b b 6 6 b b b . . 
+                . 3 3 b 3 3 3 3 3 3 3 3 3 b 3 . 
+                a a a b a a 3 a a a a 3 a b b a 
+                c a a c c a a a c c c a a c c c 
+                `],
+            500,
+            true
+            )
+            tiles.placeOnTile(myEnemy, value)
+            myEnemy.ay = 333
+        }
     }
 }
 function MakeJumpergyBar () {
-    jumpergy = statusbars.create(20, 4, StatusBarKind.Energy)
-    jumpergy.setLabel("jumpz")
-    jumpergy.positionDirection(CollisionDirection.Bottom)
-    jumpergy.setOffsetPadding(0, 8)
+    jumpergyBar = statusbars.create(20, 4, StatusBarKind.Energy)
+    jumpergyBar.setLabel("jumpz")
+    jumpergyBar.positionDirection(CollisionDirection.Bottom)
+    jumpergyBar.setOffsetPadding(0, 8)
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprite.destroy()
@@ -317,7 +407,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     sfxSpitHit.play()
     if (jumpEnergy < 4) {
         jumpEnergy += 1
-        jumpergy.value += 25
+        jumpergyBar.value += 25
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -328,7 +418,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         sfxSpitHit.play()
         if (jumpEnergy < 4) {
             jumpEnergy += 1
-            jumpergy.value += 25
+            jumpergyBar.value += 25
         }
     } else {
         otherSprite.destroy()
@@ -338,28 +428,30 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let hurtBolt: Sprite = null
 let myEnemy: Sprite = null
-let key1: Sprite = null
+let coinToss = 0
 let colRandom = 0
 let rowRandom = 0
-let playerPlatforms = 0
+let platformCount = 0
 let vertBar: StatusBarSprite = null
-let jumpergy: StatusBarSprite = null
+let playerPlatforms = 0
+let ExxitDoor: Sprite = null
+let keyCount = 0
+let jumpergyBar: StatusBarSprite = null
 let jumpEnergy = 0
 let platzBar: StatusBarSprite = null
 let mySprite: Sprite = null
 let frogSpit: Sprite = null
 let facingLeft = 0
-let platformCount = 0
 let sfxSpitHit: SoundBuffer = null
 let sfxSpit: SoundBuffer = null
 game.showLongText("This is Frob... A is Enerjump,    B is Spit, Down arrow drops a Plat", DialogLayout.Center)
 let levelNumber = 0
 MakeMySprite()
 MakePlatzBar()
+MakeJumpergyBar()
 MakeVertPosBar()
 MakeLevel()
 MakeBaddies()
-MakeJumpergyBar()
 let sfxJump = soundEffects.createSound(soundEffects.waveNumber(WaveType.Square50), 100, 0, 440)
 let sfxFire = soundEffects.createSound(soundEffects.waveNumber(WaveType.Triangle), 150, 330, 0)
 sfxSpit = soundEffects.createSound(soundEffects.waveNumber(WaveType.WhiteNoise), 100, 2000, 0)
