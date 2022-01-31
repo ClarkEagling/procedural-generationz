@@ -3,6 +3,18 @@ namespace SpriteKind {
     export const Key = SpriteKind.create()
     export const ExitDoor = SpriteKind.create()
 }
+namespace StatusBarKind {
+    export const keys = StatusBarKind.create()
+}
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (jumpEnergy > 0) {
+        mySprite.ay = mySprite.ay * -1
+        pause(350)
+        mySprite.ay = mySprite.ay * -1
+        jumpergyBar.value += -25
+        jumpEnergy += -1
+    }
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (facingLeft == 1) {
         frogSpit = sprites.createProjectileFromSprite(img`
@@ -54,24 +66,25 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.ExitDoor, function (sprite, othe
     MakeLevel()
 })
 function MakePlatzBar () {
-    platzBar = statusbars.create(20, 4, StatusBarKind.Energy)
+    platzBar = statusbars.create(10, 4, StatusBarKind.Energy)
     platzBar.setLabel("platz")
-    platzBar.positionDirection(CollisionDirection.Top)
-    platzBar.setOffsetPadding(0, 8)
+    platzBar.positionDirection(CollisionDirection.Bottom)
+    platzBar.setOffsetPadding(50, 8)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (jumpEnergy > 0) {
-        mySprite.ay = mySprite.ay * -1
-        pause(350)
-        mySprite.ay = mySprite.ay * -1
-        jumpergyBar.value += -25
-        jumpEnergy += -1
+    if (playerPlatforms < 3) {
+        tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Bottom), assets.tile`myTile1`)
+        tiles.setWallAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Bottom), true)
+        music.knock.play()
+        playerPlatforms += 1
+        platzBar.value += -33
     }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`transparency16`)
     music.baDing.play()
     keyCount += 1
+    keysBar.value += 33
     if (keyCount == 3) {
         ExxitDoor = sprites.create(img`
             . . . . . . . . . . . . . . . . 
@@ -288,15 +301,6 @@ function MakeMySprite () {
     mySprite.ay = 500
     scene.cameraFollowSprite(mySprite)
 }
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (playerPlatforms < 3) {
-        tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Bottom), assets.tile`myTile1`)
-        tiles.setWallAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Bottom), true)
-        music.knock.play()
-        playerPlatforms += 1
-        platzBar.value += -33
-    }
-})
 function MakeLevel () {
     platformCount = 0
     scene.setBackgroundColor(15)
@@ -305,6 +309,7 @@ function MakeLevel () {
     jumpEnergy = 4
     jumpergyBar.value = 100
     keyCount = 0
+    keysBar.value = 0
     tiles.setTilemap(tilemap`level2`)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile`)
     for (let index = 0; index < 3; index++) {
@@ -323,8 +328,12 @@ function MakeLevel () {
     }
 }
 info.onLifeZero(function () {
-    tiles.placeOnRandomTile(mySprite, assets.tile`myTile`)
+    scene.setBackgroundColor(2)
+    scene.cameraShake(4, 200)
     music.bigCrash.play()
+    game.splash("dang it, ribbit!")
+    scene.setBackgroundColor(15)
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile`)
     info.setLife(3)
 })
 function MakeBaddies () {
@@ -395,10 +404,17 @@ function MakeBaddies () {
     }
 }
 function MakeJumpergyBar () {
-    jumpergyBar = statusbars.create(20, 4, StatusBarKind.Energy)
+    jumpergyBar = statusbars.create(12, 4, StatusBarKind.Energy)
     jumpergyBar.setLabel("jumpz")
     jumpergyBar.positionDirection(CollisionDirection.Bottom)
-    jumpergyBar.setOffsetPadding(0, 8)
+    jumpergyBar.setOffsetPadding(-50, 8)
+}
+function MakeKeyBar () {
+    keysBar = statusbars.create(10, 3, StatusBarKind.keys)
+    keysBar.value = 0
+    keysBar.setLabel("keyz")
+    keysBar.positionDirection(CollisionDirection.Top)
+    keysBar.setOffsetPadding(0, 5)
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprite.destroy()
@@ -433,23 +449,25 @@ let colRandom = 0
 let rowRandom = 0
 let platformCount = 0
 let vertBar: StatusBarSprite = null
-let playerPlatforms = 0
 let ExxitDoor: Sprite = null
+let keysBar: StatusBarSprite = null
 let keyCount = 0
-let jumpergyBar: StatusBarSprite = null
-let jumpEnergy = 0
+let playerPlatforms = 0
 let platzBar: StatusBarSprite = null
-let mySprite: Sprite = null
 let frogSpit: Sprite = null
 let facingLeft = 0
+let jumpergyBar: StatusBarSprite = null
+let mySprite: Sprite = null
+let jumpEnergy = 0
 let sfxSpitHit: SoundBuffer = null
 let sfxSpit: SoundBuffer = null
-game.showLongText("This is Frob... A is Enerjump,    B is Spit, Down arrow drops a Plat", DialogLayout.Center)
+game.showLongText("This is Frob... Up is JumpBoost,    B is Spit,    A drops a Plat     Get 3 keys to open exit door", DialogLayout.Center)
 let levelNumber = 0
 MakeMySprite()
 MakePlatzBar()
 MakeJumpergyBar()
 MakeVertPosBar()
+MakeKeyBar()
 MakeLevel()
 MakeBaddies()
 let sfxJump = soundEffects.createSound(soundEffects.waveNumber(WaveType.Square50), 100, 0, 440)
@@ -617,7 +635,7 @@ game.onUpdate(function () {
         sfxJump.play()
     }
 })
-game.onUpdateInterval(1500, function () {
+game.onUpdateInterval(2000, function () {
     hurtBolt = sprites.createProjectileFromSide(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -636,7 +654,30 @@ game.onUpdateInterval(1500, function () {
         . . . . . 2 2 4 2 2 c . . . . . 
         . . . . . c 2 2 2 c . . . . . . 
         `, 0, -74)
-    hurtBolt.x = randint(10, 240)
+    hurtBolt.x = randint(170, 245)
+    hurtBolt.setKind(SpriteKind.badProjectile)
+    sfxFire.play()
+})
+game.onUpdateInterval(3000, function () {
+    hurtBolt = sprites.createProjectileFromSide(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 2 2 2 . . . . . . . 
+        . . . . . 2 2 2 2 2 2 . . . . . 
+        . . . . 2 2 4 4 4 4 2 2 . . . . 
+        . . . . 2 2 4 5 5 4 2 2 . . . . 
+        . . . . 2 4 4 5 5 4 4 2 . . . . 
+        . . . . 2 4 5 5 5 4 4 2 . . . . 
+        . . . . 2 4 5 5 4 4 2 2 . . . . 
+        . . . . 2 2 4 5 4 2 2 c . . . . 
+        . . . . c 2 4 4 4 2 2 . . . . . 
+        . . . . . 2 2 4 2 2 c . . . . . 
+        . . . . . c 2 2 2 c . . . . . . 
+        `, 0, -74)
+    hurtBolt.x = randint(5, 80)
     hurtBolt.setKind(SpriteKind.badProjectile)
     sfxFire.play()
 })
